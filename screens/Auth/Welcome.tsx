@@ -1,12 +1,11 @@
 import React from 'react'
 import { SafeAreaView, View } from 'react-native'
 import tw from '../../tailwind'
-import { Background, Button, Logo } from '../../components'
+import { Button, Logo } from '../../components'
 
 const Welcome = ({ navigation }: any) => {
     return (
         <SafeAreaView>
-            {/* <Background /> */}
             <View style={tw`w-full h-full px-3 flex justify-center items-center`}>
                 <Logo styles='' />
                 <View style={tw`w-full flex gap-4 justify-evenly mt-30 `}>

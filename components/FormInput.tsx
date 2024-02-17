@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, TextInput, View } from 'react-native'
 import { FormInputProps } from '../types'
 import tw from '../tailwind'
-import { style } from 'twrnc'
 
 /* The code is defining a functional component called `FormInput` using TypeScript and React. */
 const FormInput: React.FC<FormInputProps> = (

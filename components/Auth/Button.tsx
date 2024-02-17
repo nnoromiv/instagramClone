@@ -2,7 +2,6 @@ import tw from "../../tailwind";
 import { CustomButtonProps } from "../../types";
 import { Text, View, TouchableOpacity } from "react-native";
 
-// Example Button Component.
 
 function Button({ title, style, onPress, children, textStyle, disabled }: CustomButtonProps) {
     return (

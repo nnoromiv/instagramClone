@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, Dimensions, Modal, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, Modal, View } from 'react-native'
 import tw from '../tailwind'
 import { LoadingProps } from '../types'
 

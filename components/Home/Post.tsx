@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import React, { useEffect } from 'react'
+import {  View } from 'react-native'
 import tw from '../../tailwind'
 import Card from '../Post/Card'
 import { PostProps } from '../../types'

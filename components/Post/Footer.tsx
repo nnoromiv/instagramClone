@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { View } from 'react-native'
 import Icon from '../Home/Icon'
 import { COMMENT, LIKE, BOOKMARK, SHARE, LIKE_FILLED } from '../../constant'
 import tw from '../../tailwind'

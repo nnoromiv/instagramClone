@@ -1,7 +1,6 @@
 import { arrayRemove, arrayUnion, collection, collectionGroup, doc, getDoc, getDocs, limit, orderBy, query, updateDoc, where } from "firebase/firestore"
 import { auth, db } from "../firebase"
 import { Likes } from "../types"
-import { Alert } from "react-native";
 
 function toSentenceCase(str: string) {
     // Split the string into words

@@ -5,7 +5,7 @@ import FormInput from '../FormInput'
 import { Alert, Text, TouchableOpacity, View } from 'react-native'
 import tw from '../../tailwind'
 import Button from './Button'
-import { AuthProps, ErrorProps } from '../../types'
+import { AuthProps } from '../../types'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase'
 

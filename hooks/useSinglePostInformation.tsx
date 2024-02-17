@@ -1,5 +1,5 @@
 import { DocumentData } from 'firebase/firestore'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const useSinglePostInformation = () => {
     const [postInfo, setPostInfo] = useState<DocumentData>()

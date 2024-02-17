@@ -1,7 +1,6 @@
 import Button from "./Auth/Button";
 import LoginForm from "./Auth/LoginForm";
 import RegisterForm from "./Auth/RegisterForm";
-import Background from "./Background";
 import BottomTab from "./BottomTab";
 import FormInput from "./FormInput";
 import Header from "./Home/Header";
@@ -17,7 +16,6 @@ import Loading from "./Loading";
 
 export {
     Button,
-    Background,
     Logo,
     FormInput,
     LoginForm,

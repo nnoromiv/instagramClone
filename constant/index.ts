@@ -1,4 +1,3 @@
-export const BACKGROUND = require('../assets/Background.png')
 export const PROFILE = require('../assets/Profile.png')
 export const OTHER_LOGO = require('../assets/instagram.jpg')
 
