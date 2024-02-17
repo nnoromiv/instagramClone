@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: 'com.google.gms.google-services'
 apply plugin: "com.facebook.react"
 
 /**
@@ -74,9 +75,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.rntailwind"
+    namespace "com.Instagram"
     defaultConfig {
-        applicationId "com.rntailwind"
+        applicationId "com.Instagram"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

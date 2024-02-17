@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "590494404516",
+    "project_id": "thegram-211c4",
+    "storage_bucket": "thegram-211c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590494404516:android:34731f40f4f29d71ed7b31",
+        "android_client_info": {
+          "package_name": "com.Instagram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC8ZKzklVo7XU5x-bbMCShMMZkMBHvwNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

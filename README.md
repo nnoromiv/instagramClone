@@ -7,7 +7,7 @@ This is a new [**TypeScript React Native**](https://reactnative.dev) project, bo
 ## Step 1: Clone Repository
 
 ```bash
-   git clone https://github.com/nnoromiv/rnTailwind.git
+   git clone https://github.com/nnoromiv/Instagram.git
 ```
 
 ## Step 2: Delete existing `.git` file
@@ -17,7 +17,7 @@ This is a new [**TypeScript React Native**](https://reactnative.dev) project, bo
 >**Dependencies**: To install all dependencies run
 
 ```bash
-   cd rnTailwind
+   cd Instagram
 ```
 
 ```bash

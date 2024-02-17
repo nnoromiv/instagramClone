@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>rnTailwind</string>
+	<string>Instagram</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -48,5 +48,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<key>NSCameraUsageDescription</key>
+	<string>Instagram needs access to your Camera.</string>
+
+	<!-- optionally, if you want to record audio: -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Instagram needs access to your Microphone.</string>
 </dict>
 </plist>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Welcome } from './screens';
+import { Login, Welcome, Register, Home, CreatePost, StoryView } from './screens';
 
 type AuthStackProps = {};
 
@@ -21,9 +21,29 @@ const AuthStack: React.FC<AuthStackProps> = () => {
     <NavigationContainer theme={theme}>
       <Stack.Navigator initialRouteName='Welcome' screenOptions={screenOptions}>
         <Stack.Screen name="Welcome" component={Welcome} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name='Register' component={Register} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export { AuthStack };
+const HomeStack: React.FC = () => {
+  const theme = {
+    ...DefaultTheme,
+    // Your custom theme configurations go here
+  };
+
+  return (
+    <NavigationContainer theme={theme}>
+      <Stack.Navigator initialRouteName='Home' screenOptions={screenOptions}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="CreatePost" component={CreatePost} />
+        <Stack.Screen name="Story" component={StoryView} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+
+export { AuthStack, HomeStack };

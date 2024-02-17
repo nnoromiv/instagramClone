@@ -1,16 +1,18 @@
 import React from 'react'
-import { Linking, SafeAreaView, Text, View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import tw from '../../tailwind'
-import { Button } from '../../components'
+import { Background, Button, Logo } from '../../components'
 
 const Welcome = ({ navigation }: any) => {
     return (
-        <SafeAreaView style={tw`bg-white h-full`}>
-            <View style={tw`px-3 gap-4 flex justify-center items-center m-auto`}>
-                <Text style={tw`font-bold text-black text-3xl mb-2`}>Welcome by NNOROMIV</Text>
-                <Text style={tw`font-light text-black text-base`}>Begin editing page</Text>
-                {/* Example Usage of Custom Button */}
-                <Button title='Visit Author' style={`px-6 py-2`} onPress={() => Linking.openURL('https://github.com/nnoromiv')} />
+        <SafeAreaView>
+            {/* <Background /> */}
+            <View style={tw`w-full h-full px-3 flex justify-center items-center`}>
+                <Logo styles='' />
+                <View style={tw`w-full flex gap-4 justify-evenly mt-30 `}>
+                    <Button title='Login' style={`px-15 py-4`} onPress={() => navigation.navigate('Login')} />
+                    <Button title='Sign Up' style={`px-15 py-4 opacity-80`} onPress={() => navigation.navigate('Register')} />
+                </View>
             </View>
         </SafeAreaView>
     )
