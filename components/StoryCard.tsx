@@ -1,14 +1,14 @@
 import React from 'react'
-import { Image, Text, Pressable, View, TouchableOpacity } from 'react-native'
+import { Image, Text, View, TouchableOpacity } from 'react-native'
 import tw from '../tailwind'
 import { StoryCardProps } from '../types'
 
 
-const StoryCard: React.FC<StoryCardProps> = ({ navigation, id, imageUrl, storyType, name, onPress}) => {
-
+const StoryCard: React.FC<StoryCardProps> = ({ navigation, imageUrl, storyType, name, onPress}) => {
     return (
-            <View style={tw`mr-4`} key={id}>
-                <Pressable onPress={onPress}>                   
+
+            <View style={tw`mr-4`}>
+                <TouchableOpacity onPress={onPress}>                   
                     <Image
                         source={
                             {
@@ -24,7 +24,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ navigation, id, imageUrl, storyTy
                         resizeMode='cover'
                     >
                     </Image>
-                </Pressable>
+                </TouchableOpacity>
                 {
                     storyType === 'user' &&
                     <TouchableOpacity 
@@ -34,11 +34,13 @@ const StoryCard: React.FC<StoryCardProps> = ({ navigation, id, imageUrl, storyTy
                     </TouchableOpacity>
                 }
                 {
-                    <Text style={tw`text-center`}>
+                    <Text style={tw`text-center font-bold text-black`}>
                         {
-                        name.length > 11 ?
+                        name !== undefined ? name.length > 11 ?
                             name.slice(0, 9) + '...' :
                             name
+                            :
+                            'Anonymous'
                         }
                     </Text>
                 }

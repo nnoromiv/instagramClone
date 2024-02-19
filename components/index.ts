@@ -12,7 +12,7 @@ import Card from "./Post/Card";
 import Create from "./CreatePost/Create";
 import StoryCard from "./StoryCard";
 import Loading from "./Loading";
-
+import ModalNotification from "./ModalNotification";
 
 export {
     Button,
@@ -28,5 +28,6 @@ export {
     Card,
     BottomTab,
     Create,
-    Loading
+    Loading,
+    ModalNotification
 }

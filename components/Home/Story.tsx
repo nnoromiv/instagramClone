@@ -2,72 +2,67 @@ import React from 'react'
 import { ScrollView, View } from 'react-native'
 import tw from '../../tailwind'
 import StoryCard from '../StoryCard'
-import { PROFILE_PICTURE } from '../../constant'
 import { StoryProps } from '../../types'
 import { auth } from '../../firebase'
+import { toSentenceCase } from '../../api'
 
-const OTHERS = [
-  {
-    imageUrl: PROFILE_PICTURE,
-    name: 'Jackie Zhang',
-    story: [
-      {
-        image: PROFILE_PICTURE
-      },
-      {
-        image: PROFILE_PICTURE
-      }
-    ]
-  },
-  {
-    imageUrl: PROFILE_PICTURE,
-    name: 'Jane Doe',
-    story: [
-      {
-        image: PROFILE_PICTURE
-      },
-      {
-        image: PROFILE_PICTURE
-      }
-    ]
-  }
-]
 
-const Story: React.FC<StoryProps> = ({ navigation, profilePicture, story }) => {
+const Story: React.FC<StoryProps> = ({ navigation, profilePicture, story, mergedStory, currentUser }) => {
   return (
     <View style={tw`mt-3 mx-3`}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {
-          story !== null &&
-          story[0].ownerEmail === auth.currentUser?.email &&
-          <StoryCard
-            id={story[0]._uid}
-            navigation={navigation}
-            imageUrl={profilePicture}
-            storyType='user'
-            name='Your Story'
-            onPress={() => navigation.navigate('Story', {
-              name: 'YOUR STORY',
-              story: story[0].imageUrl
-            })}
-          />
-        }
-        {
-          story !== null &&
-          story[0].ownerEmail !== auth.currentUser?.email &&
-          <StoryCard
-            id={story[0]._uid}
-            navigation={navigation}
-            imageUrl={profilePicture}
-            storyType='others'
-            name={story[0].username}
-            onPress={() => navigation.navigate('Story', {
-              name: story[0].username,
-              story: story[0].imageUrl
-            })}
-          />
+        mergedStory !== null && mergedStory !== undefined && story !== null &&
+        <React.Fragment>
+          {
+          mergedStory.map((item: any, index: number) => {
+            if (item.ownerEmail !== auth.currentUser?.email) {
+              return (
+                <StoryCard
+                  key={index}
+                  navigation={navigation}
+                  imageUrl={profilePicture}
+                  storyType='user'
+                  name={toSentenceCase(currentUser)}
+                />
+              );
+            } else {
+              return null;
+            }
+          })
+
+          }
+          {
+            mergedStory.map((item: any, index: number) => (
+              item.ownerEmail === auth.currentUser?.email ?
+              <StoryCard
+                key={index}
+                navigation={navigation}
+                imageUrl={profilePicture}
+                storyType='user'
+                name={toSentenceCase(currentUser)}
+                onPress={() => navigation.navigate('Story', {
+                  name: item.username,
+                  story: story
+                })}
+              />
+              : <StoryCard
+                  key={index}
+                  navigation={navigation}
+                  imageUrl={item.profilePicture}
+                  storyType='others'
+                  name={toSentenceCase(item.username)}
+                  onPress={() => navigation.navigate('Story', {
+                    name: item.username,
+                    story: story
+                  })}
+                /> 
+            ))
+          }
+        </React.Fragment>
         }
 
+        
       </ScrollView>
     </View>
   )

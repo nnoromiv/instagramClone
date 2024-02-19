@@ -24,7 +24,6 @@ const Comments: React.FC<CommentsProps> = ({ isModal, handleModal, comment }) =>
           return null;
         }
       })).then((commentData) => {
-        // Filter out any null values (failed requests)
         const filteredCommentData = commentData.filter((data) => data !== null);
         setComments(filteredCommentData);
       }).catch((error) => {

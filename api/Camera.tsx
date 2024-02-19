@@ -3,7 +3,7 @@ import * as ImagePicker from 'react-native-image-picker'
 let options : ImagePicker.OptionsCommon = {
     mediaType: 'mixed',           
     includeBase64: true,
-    presentationStyle: 'popover',
+    presentationStyle: 'pageSheet',
     videoQuality: 'high',
     quality: 1
 }

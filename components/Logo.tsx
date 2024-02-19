@@ -4,10 +4,10 @@ import { LOGO } from '../constant'
 import tw from '../tailwind'
 import { LogoProps } from '../types'
 
-const Logo: React.FC<LogoProps> = ({ styles, image, onPress }) => {
+const Logo: React.FC<LogoProps> = ({ styles, image, onPress, onLongPress }) => {
     return (
         <View>
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={onPress} onLongPress={onLongPress}>
                 {
                     image ?
                     <Image source={image} style={tw`h-[100px] w-[100px] self-center ${styles}`} />

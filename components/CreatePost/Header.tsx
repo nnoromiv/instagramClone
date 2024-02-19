@@ -11,12 +11,12 @@ const Header: React.FC<CreatePostHeaderProps> = ({ navigation, addPostOnPress })
       <Icon
         urlSource={CLOSE}
         navigation={navigation}
-        style=''
+        style='bg-black rounded-full'
         onPress={() => navigation.goBack()}
       />
       <TouchableOpacity onPress={addPostOnPress}>
-        <Text style={tw`text-[#FF3250] font-bold text-base`}>
-          Add Post
+        <Text style={tw`text-white bg-black px-4 py-2 rounded-lg font-bold text-base`}>
+          Upload
         </Text>
       </TouchableOpacity>
     </View>

@@ -49,15 +49,11 @@ type textContentType =
 export type Likes = {
     email: string
 }
-
-export type Comment = {
-    email: string
-    comments: [] 
-}
 export interface LogoProps {
     styles: string
     image?: ImageSourcePropType | undefined
     onPress?: () => void
+    onLongPress?: () => void
 }
 export interface CustomButtonProps {
     children?: ReactNode
@@ -95,6 +91,8 @@ export interface StoryProps {
     navigation: any
     profilePicture?: string
     story: DocumentData[] | null
+    currentUser: string
+    mergedStory: any[] | undefined
 }
 
 export interface PostProps {
@@ -105,12 +103,11 @@ export interface PostProps {
 }
 
 export interface StoryCardProps {
-    id: string
     navigation: any
     imageUrl: string | undefined
     storyType: 'user' | 'others'
     name: string
-    onPress: () => void
+    onPress?: () => void
 }
 
 export interface PostHeaderProps {
@@ -191,4 +188,10 @@ export interface CommentsProps {
 
 export interface LoadingProps {
     load: boolean
+}
+
+export interface ModalNotificationProps {
+    visible: boolean
+    children: ReactNode
+    status: 'success' | 'error' | 'notification' |string
 }

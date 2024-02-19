@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView, ScrollView, StatusBar } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { RefreshControl, SafeAreaView, ScrollView, StatusBar } from 'react-native'
 import { BottomTab, Header, Post, Story } from '../../components'
 import tw from '../../tailwind'
 import { PROFILE_PICTURE } from '../../constant'
-import { allPost, userDocInformation, allStory } from '../../api'
+import { allPost, userDocInformation, allStory, mergeStoryByUid } from '../../api'
 import { DocumentData } from 'firebase/firestore'
 import Comments from '../Comments/Comments'
 import { useCommentModal, useSinglePostInformation } from '../../hooks'
@@ -14,6 +14,10 @@ const Home = ({ navigation }: any) => {
   const [story, setStory] = useState<DocumentData[] | null>(null)
   const { isModal, handleModal, setIsModal  } = useCommentModal()
   const {postInfo, setPostInfo} = useSinglePostInformation()
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [currentUser, setCurrentUser] = useState('')
+
+  const [mergedStory, setMergedStory] = useState<any[]>()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +26,7 @@ const Home = ({ navigation }: any) => {
         const userResult = await userDocInformation();
         if (userResult !== null) {
           setUserImage(userResult.data.profilePicture);
+          setCurrentUser(userResult.data.username)
         }
   
         // Fetch post data
@@ -35,20 +40,30 @@ const Home = ({ navigation }: any) => {
         if (storyResult) {
           setStory(storyResult);
         }
+
+        const result = mergeStoryByUid(storyResult)
+        setMergedStory(result)
   
       } catch (error) {
         console.error(error);
       }
     };
   
-    fetchData(); // Call the fetchData function
+    fetchData();
 
     const intervalId = setInterval(fetchData, 5000);
 
-    // Clean up interval on component unmount
     return () => clearInterval(intervalId);
   
-  }, []);  
+  }, [refreshing]);  
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setPost(null)
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const Comment = () => {
     handleModal()
@@ -56,10 +71,17 @@ const Home = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={tw`bg-white w-full h-full`}>
-      <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
-      <ScrollView stickyHeaderHiddenOnScroll stickyHeaderIndices={[0]} showsVerticalScrollIndicator={false}>
+      <StatusBar backgroundColor={'#f5f5f5'} barStyle={'dark-content'} />
+      <ScrollView 
+        stickyHeaderHiddenOnScroll 
+        stickyHeaderIndices={[0]} 
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        >
         <Header navigation={navigation} />
-        <Story navigation={navigation} profilePicture={userImage} story={story} />
+        <Story navigation={navigation} profilePicture={userImage} story={story} mergedStory={mergedStory} currentUser={currentUser} />
         <Post post={post} handleModal={() => handleModal()} setPostInfo={setPostInfo} setIsModal={setIsModal} />
         <Comments comment={postInfo} isModal={isModal} handleModal={Comment} />
       </ScrollView>

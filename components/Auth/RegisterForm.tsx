@@ -2,7 +2,7 @@ import { Formik } from 'formik'
 import React, { useState } from 'react'
 import * as Yup from 'yup'
 import FormInput from '../FormInput'
-import { Alert, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import tw from '../../tailwind'
 import Button from './Button'
 import { getRandomPicture } from '../../api'
@@ -10,6 +10,8 @@ import { AuthProps } from '../../types'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { auth, db } from '../../firebase'
+import Loading from '../Loading'
+import ModalNotification from '../ModalNotification'
 
 const RegisterSchema = Yup.object().shape({
     userName: Yup.string().required('Required'),
@@ -20,47 +22,64 @@ const RegisterSchema = Yup.object().shape({
 
 const RegisterForm = ({ navigation }: any) => {
 
-    const [loading, setLoading] = useState<boolean>(true)
+    const [load, setLoad] = useState(false)
+
+    const [ modal, setModal ] = useState({
+        status: '',
+        visible: false,
+        message: ''
+    })
 
     const getProfile = async () => {
         try {
             const result = await getRandomPicture()
 
-            if(result !== undefined){
+            if (result !== undefined) {
                 return result.results[0].picture.large
             }
         } catch (error) {
-            console.error(error)
+            setModal({ status: "error", visible: true, message: 'Error: Failed generating picture' })
         }
+
+        const timeoutId = setTimeout(() => {
+            setModal({ status: '', visible: false, message: '' })
+            clearTimeout(timeoutId);
+        }, 5000);
     }
 
 
     const handleSubmit = async (i: AuthProps) => {
-        setLoading(!loading)
+        setLoad(true)
         try {
             const result = await createUserWithEmailAndPassword(auth, i.email, i.password)
-            if(result.user.email !== null){
+            if (result.user.email !== null) {
                 await setDoc(
-                    doc(db, 'users', result.user.email),{
-                        _uid: result.user.uid,
-                        username: i.userName,
-                        email: i.email,
-                        profilePicture: await getProfile()
-                    }
-                ).then(
-                    () => Alert.alert(
-                            'Account Created',
-                            'Login to continue'
-                        )
+                    doc(db, 'users', result.user.email), {
+                    _uid: result.user.uid,
+                    username: i.userName,
+                    email: i.email,
+                    profilePicture: await getProfile()
+                }
                 )
+                setModal({ status: "success", visible: true, message: 'Successful - Go Log In' })
             }
-        } catch (error) {
-            Alert.alert(
-                'Error',
-                'An error occurred attempting to Create Account'
-            )
+        } catch (error: any) {
+            if(error.message.includes('auth/email-already-in-use')){
+                setModal({ status: "error", visible: true, message: 'Error: User already Exists' })
+            } else {
+                console.log(error)
+                setModal({ status: "error", visible: true, message: 'Error: Unknown Error' })
+            }
         }
-        setLoading(true)  
+
+        const timeoutId = setTimeout(() => {
+            if(modal.status === 'success'){
+                navigation.navigate('Login')
+            }
+            setModal({ status: '', visible: false, message: '' })
+            setLoad(false)
+            clearTimeout(timeoutId);
+        }, 5000);
     }
 
     return (
@@ -75,8 +94,19 @@ const RegisterForm = ({ navigation }: any) => {
             }}
             validationSchema={RegisterSchema}
         >
-            {({ handleChange, values, isValid, errors }) => (
+            {({ handleChange, values, isValid, errors, isSubmitting }) => (
                 <View style={tw`w-full px-3 gap-6 mt-6`}>
+                    <Loading load={load} />
+
+                    <ModalNotification
+                        status={modal.status}
+                        visible={modal.visible}
+                        children={
+                            <Text style={tw`text-white font-bold`}>
+                                {modal.message}
+                            </Text>
+                        }
+                    />
                     
                     <FormInput
                         placeholder='User name'
@@ -120,21 +150,21 @@ const RegisterForm = ({ navigation }: any) => {
                         <Text style={tw`ml-auto text-blue-900 underline font-bold`}>Terms & Conditions<Text style={tw`no-underline text-[#d3d3d3]`}> are accepted on account creation</Text></Text>
                     </TouchableOpacity>
 
-                    <Button 
+                    <Button
                         title={
-                            loading ? 'Create Account' : 'Creating...'
-                        } 
+                            'Create Account'
+                        }
                         disabled={
-                            loading ? !(isValid && (values.confirmPassword === values.password)) : !loading
-                        } 
+                            !(isValid && (values.confirmPassword === values.password))
+                        }
                         style={
                             `py-4 rounded-xl bg-black 
-                            ${(isValid && values.password === values.confirmPassword) 
-                                ? 'opacity-100' 
+                            ${(isValid && values.password === values.confirmPassword)
+                                ? 'opacity-100'
                                 : 'opacity-50'
                             } 
-                        `} 
-                        onPress={() => handleSubmit(values)} 
+                        `}
+                        onPress={() => handleSubmit(values)}
                     />
 
                     <Text style={tw`mx-auto mt-3 text-base`}>Already have an account?

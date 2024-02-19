@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from './firebase'; // Assuming './firebase' exports the Firebase app instance
+import { auth } from './firebase';
 import { AuthStack, HomeStack } from './Stacks';
-import { onAuthStateChanged, User } from 'firebase/auth'; // Import onAuthStateChanged from 'firebase/auth'
+import { onAuthStateChanged, User } from 'firebase/auth';
 
 const Screen: React.FC = () => {
     const [currentUser, setCurrentUser] = useState<User | null>();
