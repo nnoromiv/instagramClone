@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import tw from '../../tailwind'
 import { CLOSE } from '../../constant'
 import { Icon } from '../../components'
 import { toSentenceCase } from '../../api'
+import Carousel from 'react-native-reanimated-carousel'
 
 const { height, width } = Dimensions.get('screen')
 
 const StoryView = ({ navigation, route }: any) => {
     const { name, story } = route?.params || {
         name: '',
-        story: ''
+        story: null
     }
     const [index, setIndex] = useState(0)
     const [iteration, setIteration] = useState(0);
@@ -31,14 +32,15 @@ const StoryView = ({ navigation, route }: any) => {
     }, [index, iteration]);
 
     useEffect(() => {
-        scrollViewRef.current?.scrollTo({ x: index + 1 * (width / 4), animated: true });
-    }, [index]);
+        scrollViewRef.current?.scrollTo({ x: index * width, animated: true });
+      }, [index]);
+
 
 
 
     return (
         <View style={tw``}>
-            <View style={tw`px-3 mt-5 z-10 flex-row items-center justify-between`}>
+            <View style={tw`px-3 mt-5 z-10 m-3 flex-row items-center justify-between`}>
                 <Icon
                     urlSource={CLOSE}
                     navigation={true}
@@ -58,16 +60,23 @@ const StoryView = ({ navigation, route }: any) => {
                 }
             </View>
 
-            <ScrollView ref={scrollViewRef} pagingEnabled horizontal showsHorizontalScrollIndicator={false} style={tw`absolute overflow-hidden`}>
-                {
-                    story !==undefined &&
-                    story.map((item: any, id: number) => (
-                        story[id].username === name &&
-                        <TouchableOpacity style={tw`relative`} key={index + id} onPress={() => setIndex(prevIndex => (prevIndex + 2) % story.length)} >
+            {/* {
+                story !== null &&
+                <Carousel
+                loop
+                width={width/4}
+                height={height/4}
+                autoPlay={true}
+                data={story}
+                scrollAnimationDuration={1000}
+                onSnapToItem={(index) => console.log('current index:', index)}
+                key={index}
+                renderItem={(item: any ) => (
+                    <View style={tw`relative`} >
                             <Image
                                 source={
                                     {
-                                        uri: item.imageUrl[0].image.image.url
+                                        uri: item.imageUrl
                                     }
                                 }
                                 style={
@@ -77,10 +86,36 @@ const StoryView = ({ navigation, route }: any) => {
                             >
                             </Image>
                             <Text style={tw`bg-white w-full font-bold self-center text-center bottom-50 text-black`}>{item.caption}</Text>
-                        </TouchableOpacity>
-                    ))
+                        </View>
+                    )
                 }
+            />
+            } */}
+
+            <ScrollView
+                ref={scrollViewRef}
+                pagingEnabled
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={tw``}
+            >
+                {
+                    story.map((item: any, id: number) => (
+                        <Pressable style={tw`relative`} key={id} onPress={() => setIndex(prevIndex => (prevIndex + 1) % story.length) } >
+
+                            <Image
+                                source={{ uri: item.imageUrl }}
+                                style={tw`w-[${width / 4}] h-[${height / 4}]`}
+                                resizeMode='cover'
+                            />
+                            <Text style={tw`bg-white w-full font-bold self-center text-center bottom-50 text-black`}>
+                                {item.caption}
+                            </Text>
+                        </Pressable>
+                ))}
             </ScrollView>
+
+
 
         </View>
     )

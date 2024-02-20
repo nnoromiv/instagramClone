@@ -39,7 +39,7 @@ const HomeStack: React.FC = () => {
       <Stack.Navigator initialRouteName='Home' screenOptions={screenOptions}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
-        <Stack.Screen name="Story" component={StoryView} />
+        <Stack.Screen name="StoryView" component={StoryView} />
         <Stack.Screen name="Messenger" component={Messenger} />
         <Stack.Screen name="Chat" component={Chat} />
 

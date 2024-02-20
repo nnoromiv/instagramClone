@@ -25,8 +25,11 @@ const Card: React.FC<PostCardProps> = ({
   postOwner,
   postId,
   handleModal,
-  setPostInfo
+  setPostInfo,
+  post
 }) => {
+
+  // console.log(likes)
 
   const { load, setLoad } = useLoader()
   const [ modal, setModal ] = useState({
@@ -71,11 +74,11 @@ const Card: React.FC<PostCardProps> = ({
             uri: postImage
           }}
           style={tw`h-full w-full`}
-          resizeMode='cover'
+          resizeMode='stretch'
         />
       </View>
 
-      <Footer navigation={navigation} handleModal={handleModal} setPostInfo={setPostInfo} likes={likes} postOwner={postOwner} postId={postId} />
+      <Footer navigation={navigation} post={post} handleModal={handleModal} setPostInfo={setPostInfo} likes={likes} postOwner={postOwner} postId={postId} />
 
       <Text style={tw`px-3 mt-2 text-sm text-black`}>
         {

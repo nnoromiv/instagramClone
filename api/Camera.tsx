@@ -5,7 +5,8 @@ let options : ImagePicker.OptionsCommon = {
     includeBase64: true,
     presentationStyle: 'pageSheet',
     videoQuality: 'high',
-    quality: 1
+    quality: 1,
+    maxHeight: 1280
 }
 
 const openCamera = async () => {

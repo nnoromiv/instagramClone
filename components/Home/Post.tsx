@@ -49,6 +49,7 @@ const timeoutId = setTimeout(() => {
             postId={post[index].id}
             handleModal={handleModal}
             setPostInfo={setPostInfo}
+            post={post}
           />
           </View>
         ))

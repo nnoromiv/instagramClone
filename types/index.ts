@@ -48,6 +48,7 @@ type textContentType =
 
 export type Likes = {
     email: string
+    like: boolean
 }
 export interface LogoProps {
     styles: string
@@ -129,6 +130,7 @@ export interface PostCardProps {
     postId: string
     handleModal: () => void
     setPostInfo: React.Dispatch<React.SetStateAction<DocumentData | undefined>>
+    post: DocumentData[] | null
 }
 
 export interface BottomTabProps {
@@ -179,6 +181,7 @@ export interface FooterProps {
     postId: string
     setPostInfo: React.Dispatch<React.SetStateAction<DocumentData | undefined>>
     handleModal: () => void
+    post: DocumentData[] | null
 }
 
 export interface CommentsProps {
@@ -230,4 +233,16 @@ export interface ChatBodyProps {
 export interface ChatInputProps {
     userInformation: DocumentData | null
     item : DocumentData | null
+}
+
+export interface storyProps {
+    _uid: string
+    caption: string
+    comments: [], 
+    createdAt: [Object], 
+    imageUrl: [[Object]], 
+    likes: [], 
+    ownerEmail: string
+    profilePicture: string, 
+    username: string
 }

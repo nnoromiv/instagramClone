@@ -27,6 +27,7 @@ const Uploader: React.FC<CreatePostUploaderProps> = ({ navigation, paramPostType
     const { hasPermission } = useCameraPermission()
     const [user, setUser] = useState<DocumentData | null>(null)
     let device: CameraDevice | undefined;
+    const [load, setLoad] = useState(false)
 
     const [modal, setModal] = useState({
         status: '',
@@ -52,8 +53,15 @@ const Uploader: React.FC<CreatePostUploaderProps> = ({ navigation, paramPostType
     }, [])
 
     const handleSubmit = ({ postType, image, caption }: postSubmittedProps) => {
-        if (caption === '') return setModal({ status: "notification", visible: true, message: 'Please add a caption' })
-        if (user !== null && image !== undefined) {
+        setLoad(true)
+
+        if (caption === '')
+        {
+            setLoad(false)
+            setModal({ status: "notification", visible: true, message: 'Please add a caption' })
+        }
+
+        if (user !== null && image !== undefined && image !== PROFILE_PICTURE && caption !== '') {
             try {
                 const handleImage = async () => {
                     const result = await uploadImage(image)
@@ -73,20 +81,24 @@ const Uploader: React.FC<CreatePostUploaderProps> = ({ navigation, paramPostType
                             likes: [],
                             comments: []
                         }).then(() => (
-                            setModal({ status: "success", visible: true, message: `Success: ${postType} Added` })
-                        ))
+                            setLoad(false)
+                        )).finally(
+                            () => {
+                                setModal({ status: "success", visible: true, message: `Success: ${postType} Added` })
+                            }
+                        )
                     }
 
                 }
                 handleImage()
             } catch (error) {
+                setLoad(false)
                 setModal({ status: "error", visible: true, message: `Error: Error while adding ${postType}` })
             }
         } else {
+            setLoad(false)
             setModal({ status: "error", visible: true, message: `Error: Not Permitted` })
         }
-
-
     }
 
     const timeoutId = setTimeout(() => {
@@ -156,7 +168,7 @@ const Uploader: React.FC<CreatePostUploaderProps> = ({ navigation, paramPostType
                 >
                     {({ handleChange, values, isValid, errors, isSubmitting }) => (
                         <>
-                            <Loading load={isSubmitting} />
+                            <Loading load={load} />
                             <ModalNotification
                                 status={modal.status}
                                 visible={modal.visible}

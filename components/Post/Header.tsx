@@ -12,14 +12,15 @@ const Header: React.FC<PostHeaderProps> = ({ imageUrl, userName}) => {
                   uri: imageUrl
                 }}
                 style={tw`w-[50px]  h-[50px] rounded-full `}
+                resizeMode='cover'
             ></Image>
-            <Text style={tw`font-bold text-black`}>{
+            <Text style={tw`font-bold text-[#d3d3d3]`}>{
                 userName === '' ?
                 'Unknown User' :
                 userName
             }</Text>
         </View>
-        <Text style={tw`text-4xl text-black font-bold`}>...</Text>
+        <Text style={tw`text-4xl text-[#d3d3d3] font-bold`}>...</Text>
     </View>
   )
 }
