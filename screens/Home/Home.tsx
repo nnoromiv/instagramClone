@@ -1,18 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { RefreshControl, SafeAreaView, ScrollView, StatusBar } from 'react-native'
-import { BottomTab, Header, Post, Story } from '../../components'
+import { BottomTab, Comments, Header, Post, Story } from '../../components'
 import tw from '../../tailwind'
 import { PROFILE_PICTURE } from '../../constant'
 import { allPost, userDocInformation, allStory, mergeStoryByUid } from '../../api'
 import { DocumentData } from 'firebase/firestore'
-import Comments from '../Comments/Comments'
 import { useCommentModal, useSinglePostInformation } from '../../hooks'
 
 const Home = ({ navigation }: any) => {
   const [userImage, setUserImage] = useState(PROFILE_PICTURE)
   const [post, setPost] = useState<DocumentData[] | null>(null)
   const [story, setStory] = useState<DocumentData[] | null>(null)
-  const { isModal, handleModal, setIsModal  } = useCommentModal()
+  const {isModal, handleModal, setIsModal  } = useCommentModal()
   const {postInfo, setPostInfo} = useSinglePostInformation()
   const [refreshing, setRefreshing] = React.useState(false);
   const [currentUser, setCurrentUser] = useState('')

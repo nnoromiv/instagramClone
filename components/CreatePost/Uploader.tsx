@@ -59,7 +59,8 @@ const Uploader: React.FC<CreatePostUploaderProps> = ({ navigation, paramPostType
                     const result = await uploadImage(image)
 
                     if (result !== undefined && result.status === 200) {
-                        addDoc(collection(db, 'users', user.data.email, postType), {
+                        addDoc(
+                            collection(db, 'users', user.data.email, postType), {
                             imageUrl: [{
                                 image: result.data
                             }],

@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ navigation }) => {
             <View style={tw`flex flex-row gap-3`}>
                 <Icon urlSource={POST} navigation={navigation} onPress={() => openPost(navigation)} style='' />
                 <Icon urlSource={LIKE} navigation={navigation} style='' />
-                <Icon urlSource={MESSENGER} navigation={navigation} style='' text={11} />
+                <Icon urlSource={MESSENGER} navigation={navigation} style=''onPress={() => navigation.navigate('Messenger')}/>
             </View>
         </View>
     )

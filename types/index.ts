@@ -76,7 +76,8 @@ export interface FormInputProps {
     value: string
     secureTextEntry?: boolean
     maxLength?: number
-    styles: string
+    styles: string,
+    isMessage?: boolean
 }
 
 export interface IconProps {
@@ -146,7 +147,7 @@ export interface ErrorProps {
 }
 
 export interface HeaderProps {
-    navigation: any
+    navigation: any,
 }
 
 
@@ -194,4 +195,39 @@ export interface ModalNotificationProps {
     visible: boolean
     children: ReactNode
     status: 'success' | 'error' | 'notification' |string
+}
+
+export interface MessengerProps {
+    navigation: any,
+}
+
+export interface MessengerHeaderProps {
+    navigation: any
+    currentUser: string
+    profilePicture: string
+}
+
+export interface MessageCardProps {
+    navigation: any
+    messengerProfilePicture: string
+    messengerName : string
+    onPress: () => void
+}
+
+export interface ChatProps {
+    route: any
+    navigation: any
+}
+
+export interface ChatBodyProps {
+    picture: string
+    name: string
+    body: string
+    time: string
+    user: 'user' | 'other'
+}
+
+export interface ChatInputProps {
+    userInformation: DocumentData | null
+    item : DocumentData | null
 }

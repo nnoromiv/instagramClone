@@ -13,6 +13,11 @@ import Create from "./CreatePost/Create";
 import StoryCard from "./StoryCard";
 import Loading from "./Loading";
 import ModalNotification from "./ModalNotification";
+import MessageCard from "./Messenger/MessageCard";
+import Comments from "./Comments";
+import MessengerHeader from "./Messenger/MessengerHeader";
+import ChatInput from "./Chat/ChatInput";
+import ChatBody from "./Chat/ChatBody";
 
 export {
     Button,
@@ -29,5 +34,10 @@ export {
     BottomTab,
     Create,
     Loading,
-    ModalNotification
+    ModalNotification,
+    MessageCard,
+    Comments,
+    MessengerHeader,
+    ChatInput,
+    ChatBody
 }

@@ -8,7 +8,10 @@ import { toSentenceCase } from '../../api'
 const { height, width } = Dimensions.get('screen')
 
 const StoryView = ({ navigation, route }: any) => {
-    const { name, story } = route?.params || {}
+    const { name, story } = route?.params || {
+        name: '',
+        story: ''
+    }
     const [index, setIndex] = useState(0)
     const [iteration, setIteration] = useState(0);
     const scrollViewRef = useRef<ScrollView>(null);
@@ -25,13 +28,13 @@ const StoryView = ({ navigation, route }: any) => {
         )
 
         return () => clearTimeout(timeoutId);
-      }, [index, iteration]);
-    
-      useEffect(() => {
-        scrollViewRef.current?.scrollTo({ x: index+1 * (width/4), animated: true });
-      }, [index]);
-    
-    
+    }, [index, iteration]);
+
+    useEffect(() => {
+        scrollViewRef.current?.scrollTo({ x: index + 1 * (width / 4), animated: true });
+    }, [index]);
+
+
 
     return (
         <View style={tw``}>
@@ -43,20 +46,24 @@ const StoryView = ({ navigation, route }: any) => {
                     onPress={() => navigation.goBack()}
                 />
 
-                <Text style={tw`font-bold text-black text-base`}>
-                    {
-                        name.length > 11 ?
-                            toSentenceCase(name.slice(0, 9))+ '...' :
-                            toSentenceCase(name)
-                    }
-                </Text>
+                {
+                    name !== undefined &&
+                    <Text style={tw`font-bold text-black text-base`}>
+                        {
+                            name.length > 11 ?
+                                toSentenceCase(name.slice(0, 9)) + '...' :
+                                toSentenceCase(name)
+                        }
+                    </Text>
+                }
             </View>
 
             <ScrollView ref={scrollViewRef} pagingEnabled horizontal showsHorizontalScrollIndicator={false} style={tw`absolute overflow-hidden`}>
                 {
+                    story !==undefined &&
                     story.map((item: any, id: number) => (
                         story[id].username === name &&
-                        <TouchableOpacity style={tw`relative`} key={index+id} onPress={() => setIndex(prevIndex => (prevIndex + 2) % story.length) } >
+                        <TouchableOpacity style={tw`relative`} key={index + id} onPress={() => setIndex(prevIndex => (prevIndex + 2) % story.length)} >
                             <Image
                                 source={
                                     {

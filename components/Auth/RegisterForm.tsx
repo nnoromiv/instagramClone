@@ -8,7 +8,7 @@ import Button from './Button'
 import { getRandomPicture } from '../../api'
 import { AuthProps } from '../../types'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { auth, db } from '../../firebase'
 import Loading from '../Loading'
 import ModalNotification from '../ModalNotification'
@@ -55,11 +55,13 @@ const RegisterForm = ({ navigation }: any) => {
             if (result.user.email !== null) {
                 await setDoc(
                     doc(db, 'users', result.user.email), {
-                    _uid: result.user.uid,
-                    username: i.userName,
-                    email: i.email,
-                    profilePicture: await getProfile()
-                }
+                        _uid: result.user.uid,
+                        username: i.userName,
+                        email: i.email,
+                        profilePicture: await getProfile(),
+                        joinedAt: serverTimestamp(),
+
+                    }
                 )
                 setModal({ status: "success", visible: true, message: 'Successful - Go Log In' })
             }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Login, Welcome, Register, Home, CreatePost, StoryView } from './screens';
+import { Login, Welcome, Register, Home, CreatePost, StoryView, Messenger, Chat } from './screens';
 
 type AuthStackProps = {};
 
@@ -40,6 +40,9 @@ const HomeStack: React.FC = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
         <Stack.Screen name="Story" component={StoryView} />
+        <Stack.Screen name="Messenger" component={Messenger} />
+        <Stack.Screen name="Chat" component={Chat} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

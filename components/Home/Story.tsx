@@ -10,7 +10,11 @@ import { toSentenceCase } from '../../api'
 const Story: React.FC<StoryProps> = ({ navigation, profilePicture, story, mergedStory, currentUser }) => {
   return (
     <View style={tw`mt-3 mx-3`}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false}
+        alwaysBounceHorizontal
+        >
         {
         mergedStory !== null && mergedStory !== undefined && story !== null &&
         <React.Fragment>

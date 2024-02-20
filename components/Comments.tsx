@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, Image, Modal, Pressable, ScrollView, Text, View } from 'react-native'
-import tw from '../../tailwind'
-import { CommentsProps } from '../../types'
-import { Loading } from '../../components'
-import { useLoader } from '../../hooks'
-import { commenterDocInformation, toSentenceCase } from '../../api'
+import tw from '../tailwind'
+import { CommentsProps } from '../types'
+import { Loading } from '.'
+import { useLoader } from '../hooks'
+import { commenterDocInformation, toSentenceCase } from '../api'
 
 const { width, height } = Dimensions.get('screen')
 

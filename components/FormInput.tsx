@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, TextInput, View } from 'react-native'
 import { FormInputProps } from '../types'
 import tw from '../tailwind'
+import Icon from 'react-native-vector-icons/FontAwesome6'
 
 /* The code is defining a functional component called `FormInput` using TypeScript and React. */
 const FormInput: React.FC<FormInputProps> = (
@@ -17,18 +18,23 @@ const FormInput: React.FC<FormInputProps> = (
         value,
         secureTextEntry,
         maxLength,
-        styles
+        styles,
+        isMessage
     }) => {
     return (
         /* The code you provided is a React component called `FormInput`. It renders a `View` component
         that contains an `Image` component and a `TextInput` component. */
         <View style={tw`flex justify-center mt-3`}>
             {
-                source === undefined && sourceError === undefined
+                source === undefined || sourceError === undefined
                     ? <></> :
                     <Image src={logic ? sourceError : source}
                         style={tw`w-[25px] h-[25px] absolute z-2 mx-3`}
                     />
+            }
+            {
+                isMessage && 
+                <Icon name={'paperclip'} size={20} color={'black'} style={tw`absolute z-2 right-5 `}/>
             }
             <TextInput
                 placeholder={placeholder} autoCapitalize={"none"}

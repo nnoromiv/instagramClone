@@ -1,15 +1,16 @@
 import { launchGallery, openCamera } from "./Camera";
 import { toSentenceCase } from "./CaseChange";
 import { handleComment, commenterDocInformation, allPostComments } from "./Comment";
+import { formatDate } from "./FormatDate";
 import { mergeStoryByUid } from "./Instagram";
 import { handleLike } from "./Like";
 import { logOut } from "./LogOut";
+import { messages } from "./Messages";
 import { allPost } from "./Post";
 import { getRandomPicture } from "./ProfilePicture";
 import { allStory } from "./Story";
 import { uploadImage } from "./UploadImage";
-import { userDocInformation, userInformation } from "./User";
-
+import { userDocInformation, userInformation, usersInformation } from "./User";
 
 export {
     openCamera,
@@ -26,5 +27,8 @@ export {
     toSentenceCase,
     logOut,
     mergeStoryByUid,
-    uploadImage
+    uploadImage,
+    usersInformation,
+    messages,
+    formatDate,
 }

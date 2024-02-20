@@ -27,7 +27,23 @@ const userDocInformation = async () => {
     return userInfo[0]
 }
 
+const usersInformation = async () => {
+    const q = query(
+        collection(db, 'users'),
+    );
+
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) return null; // Return null if no matching document found
+
+    const userInfo = querySnapshot.docs.map(doc => (
+        doc.data()
+    ));
+
+    return userInfo
+}
+
 export {
     userInformation,
-    userDocInformation
+    userDocInformation,
+    usersInformation
 }
