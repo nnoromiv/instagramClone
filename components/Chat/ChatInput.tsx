@@ -1,17 +1,20 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Text, TouchableOpacity, View } from 'react-native'
 import tw from '../../tailwind'
 import { Formik } from 'formik'
 import FormInput from '../FormInput'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import { ChatInputProps } from '../../types'
-import { Timestamp, addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../../firebase'
+import Icon from '../Home/Icon'
+import { SEND } from '../../constant'
+
+const { width } = Dimensions.get('screen')
 
 const ChatInput: React.FC<ChatInputProps> = ({ userInformation, item }) => {
 
     const handleSubmit = async (i: any, { resetForm }: any) => {
-        if (userInformation !== null && item !== null) {
+        if (userInformation !== null && item !== null && i.message !== '') {
             try {
                 await addDoc(
                     collection(db, 'messages'), {
@@ -44,20 +47,14 @@ const ChatInput: React.FC<ChatInputProps> = ({ userInformation, item }) => {
                         <FormInput
                             onChangeText={handleChange('message')}
                             placeholder=''
-                            styles={`bg-[#d3d3d3] border-b-[1] border-white text-black 
-                                ${values.message === '' ? 'w-[97]' : 'w-[87]'}`}
+                            styles={`bg-[#d3d3d3] border-b-[1] border-white text-black w-[${width/4.5}]`}
                             textContentType='name'
                             value={values.message}
                             keyboardType='twitter'
                             isMessage
                         />
 
-                        {
-                            values.message !== '' &&
-                            <TouchableOpacity onPress={() => handleSubmit(values, { resetForm })}>
-                                <Icon name='send' size={30} color={'white'} style={tw`mt-3 bg-black rounded-full p-2`} />
-                            </TouchableOpacity>
-                        }
+                        <Icon style='mt-3 ' navigation={null} onPress={() => handleSubmit(values, { resetForm })} urlSource={SEND} />
                     </View>
                 )}
             </Formik>

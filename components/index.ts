@@ -13,9 +13,9 @@ import Create from "./CreatePost/Create";
 import StoryCard from "./StoryCard";
 import Loading from "./Loading";
 import ModalNotification from "./ModalNotification";
-import MessageCard from "./Messenger/MessageCard";
+import MessageCard from "./Messages/MessageCard";
 import Comments from "./Comments";
-import MessengerHeader from "./Messenger/MessengerHeader";
+import MessengerHeader from "./Messages/MessengerHeader";
 import ChatInput from "./Chat/ChatInput";
 import ChatBody from "./Chat/ChatBody";
 

@@ -5,6 +5,7 @@ import Card from '../Post/Card'
 import { PostProps } from '../../types'
 import Loading from '../Loading'
 import { toSentenceCase } from '../../api'
+import Animated, { FadeIn } from 'react-native-reanimated'
 
 
 const Post: React.FC<PostProps> = ({post, handleModal, setPostInfo}) => {
@@ -36,7 +37,10 @@ const timeoutId = setTimeout(() => {
         <Loading load={load} />
         :
         post.map((item, index) => (
-          <View key={index}>
+          <Animated.View
+           entering={FadeIn.delay(200).duration(2000).springify()}
+           key={index}
+          >
             <Card
             imageUrl={item.profilePicture}
             userName={toSentenceCase(item.username)}
@@ -51,7 +55,7 @@ const timeoutId = setTimeout(() => {
             setPostInfo={setPostInfo}
             post={post}
           />
-          </View>
+          </Animated.View>
         ))
       }
     </View>

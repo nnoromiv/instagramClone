@@ -1,7 +1,8 @@
 import React from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import tw from '../../tailwind'
 import { IconProps } from '../../types'
+import FastImage from 'react-native-fast-image'
 
 const Icon: React.FC<IconProps> = ({ navigation, style, urlSource, text, onPress }) => {
     return (
@@ -12,11 +13,12 @@ const Icon: React.FC<IconProps> = ({ navigation, style, urlSource, text, onPress
                     <Text style={tw`text-white font-bold`}>{text}</Text>
                 </View>
             }
-            <Image
+            <FastImage
                 style={tw`w-[24px] h-[24px] ${style}`}
-                resizeMode='cover'
+                resizeMode={FastImage.resizeMode.cover}
                 source={{
                     uri: urlSource,
+                    priority: FastImage.priority.high
                 }} />
         </TouchableOpacity>
     )

@@ -9,6 +9,7 @@ import { AuthProps } from '../../types'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase'
 import { Loading, ModalNotification } from '../index'
+import Animated, { FadeInDown, SlideInRight } from 'react-native-reanimated'
 
 const LoginFormSchema = Yup.object().shape({
     email: Yup.string().email().required('Required'),
@@ -103,7 +104,12 @@ const LoginForm = ({ navigation }: any) => {
                         styles=''
                     />
                     <TouchableOpacity>
-                        <Text style={tw`ml-auto text-blue-900 underline font-bold`}>Forgot Password?</Text>
+                        <Animated.Text
+                            entering={SlideInRight.delay(200).duration(1000).springify().damping(30).mass(5)}
+
+                            style={tw`ml-auto text-blue-900 underline font-bold`}>
+                            Forgot Password?
+                        </Animated.Text>
                     </TouchableOpacity>
 
                     <Button
@@ -115,9 +121,11 @@ const LoginForm = ({ navigation }: any) => {
                         onPress={() => handleSubmit(values)}
                     />
 
-                    <Text style={tw`mx-auto mt-3 text-base text-black`}>Don&apos;t have an account?
+                    <Animated.Text 
+                            entering={SlideInRight.delay(200).duration(1000).springify().damping(30).mass(5)}
+                        style={tw`mx-auto mt-3 text-base text-black`}>Don&apos;t have an account?
                         <Text style={tw`text-blue-900 font-bold`} onPress={() => navigation.navigate('Register')}> Sign Up</Text>
-                    </Text>
+                    </Animated.Text>
                 </View>
             )}
         </Formik>

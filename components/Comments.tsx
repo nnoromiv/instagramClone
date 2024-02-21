@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, Modal, Pressable, ScrollView, Text, View } from 'react-native'
+import { Dimensions, Modal, Pressable, ScrollView, Text, View } from 'react-native'
 import tw from '../tailwind'
 import { CommentsProps } from '../types'
 import { Loading } from '.'
 import { useLoader } from '../hooks'
 import { commenterDocInformation, toSentenceCase } from '../api'
+import Animated, { FadeInDown } from 'react-native-reanimated'
+import FastImage from 'react-native-fast-image'
 
 const { width, height } = Dimensions.get('screen')
 
@@ -58,16 +60,27 @@ const Comments: React.FC<CommentsProps> = ({ isModal, handleModal, comment }) =>
             <ScrollView showsVerticalScrollIndicator={false}>
             {
                 comments.map((item: any, index: number) => (
-                  <View style={tw`mt-4`} key={index}>
+                  <Animated.View
+                    entering={FadeInDown.delay(100).duration(100).springify()}
+                    style={tw`mt-4`} 
+                    key={index}
+                  >
                     <View style={tw`flex-row gap-6 items-center`}>
-                      <Image source={{ uri: item.commenter.profilePicture }} style={tw`w-[70px] my-3 h-[70px] rounded-full`} />
+                      <FastImage 
+                        source={{ 
+                          uri: item.commenter.profilePicture,
+                          priority: FastImage.priority.high
+                        }} 
+                        resizeMode={FastImage.resizeMode.cover}
+                        style={tw`w-[70px] my-3 h-[70px] rounded-full`} 
+                      />
                       <View style={tw`gap-2`}>
                         <Text style={tw`text-black font-bold text-base`}>{toSentenceCase(item.commenter.username)}</Text>
                         <Text style={tw`text-black`}>{item.comment.comment}</Text>
                       </View>
                     </View>
                     <View style={tw`self-center rounded-full h-[1px] w-[100] bg-[#d3d3d3]`}></View>
-                  </View>
+                  </Animated.View>
                 ))
               }
             </ScrollView>

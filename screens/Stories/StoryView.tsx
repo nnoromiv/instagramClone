@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Dimensions, Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Pressable, ScrollView, Text, View } from 'react-native'
 import tw from '../../tailwind'
 import { CLOSE } from '../../constant'
 import { Icon } from '../../components'
 import { toSentenceCase } from '../../api'
-import Carousel from 'react-native-reanimated-carousel'
+import FastImage from 'react-native-fast-image'
 
 const { height, width } = Dimensions.get('screen')
 
@@ -60,38 +60,6 @@ const StoryView = ({ navigation, route }: any) => {
                 }
             </View>
 
-            {/* {
-                story !== null &&
-                <Carousel
-                loop
-                width={width/4}
-                height={height/4}
-                autoPlay={true}
-                data={story}
-                scrollAnimationDuration={1000}
-                onSnapToItem={(index) => console.log('current index:', index)}
-                key={index}
-                renderItem={(item: any ) => (
-                    <View style={tw`relative`} >
-                            <Image
-                                source={
-                                    {
-                                        uri: item.imageUrl
-                                    }
-                                }
-                                style={
-                                    tw`w-[${width / 4}] h-[${height / 4}] `
-                                }
-                                resizeMode='cover'
-                            >
-                            </Image>
-                            <Text style={tw`bg-white w-full font-bold self-center text-center bottom-50 text-black`}>{item.caption}</Text>
-                        </View>
-                    )
-                }
-            />
-            } */}
-
             <ScrollView
                 ref={scrollViewRef}
                 pagingEnabled
@@ -103,10 +71,13 @@ const StoryView = ({ navigation, route }: any) => {
                     story.map((item: any, id: number) => (
                         <Pressable style={tw`relative`} key={id} onPress={() => setIndex(prevIndex => (prevIndex + 1) % story.length) } >
 
-                            <Image
-                                source={{ uri: item.imageUrl }}
+                            <FastImage
+                                source={{ 
+                                    uri: item.imageUrl,
+                                    priority: FastImage.priority.high
+                                }}
                                 style={tw`w-[${width / 4}] h-[${height / 4}]`}
-                                resizeMode='cover'
+                                resizeMode={FastImage.resizeMode.cover}
                             />
                             <Text style={tw`bg-white w-full font-bold self-center text-center bottom-50 text-black`}>
                                 {item.caption}

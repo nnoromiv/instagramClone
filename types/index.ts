@@ -1,6 +1,7 @@
 import { DocumentData } from "firebase/firestore";
 import { ChangeEvent , ReactNode } from "react";
 import { ImageSourcePropType, KeyboardTypeOptions } from "react-native";
+import { Source } from "react-native-fast-image";
 
 // Example Type Style
 type textContentType =
@@ -52,7 +53,7 @@ export type Likes = {
 }
 export interface LogoProps {
     styles: string
-    image?: ImageSourcePropType | undefined
+    image?: number | Source | undefined
     onPress?: () => void
     onLongPress?: () => void
 }

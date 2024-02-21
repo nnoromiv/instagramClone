@@ -1,18 +1,24 @@
 import React from 'react'
-import { Image, Text, View, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import tw from '../tailwind'
 import { StoryCardProps } from '../types'
+import Animated, { FadeInRight } from 'react-native-reanimated'
+import FastImage from 'react-native-fast-image'
 
 
 const StoryCard: React.FC<StoryCardProps> = ({ navigation, imageUrl, storyType, name, onPress}) => {
     return (
 
-            <View style={tw`mr-4`}>
+            <Animated.View
+             entering={FadeInRight.delay(200).duration(4000).springify()}
+             style={tw`mr-4`}
+            >
                 <TouchableOpacity onPress={onPress}>                   
-                    <Image
+                    <FastImage
                         source={
                             {
-                                uri: imageUrl
+                                uri: imageUrl,
+                                priority: FastImage.priority.high
                             }
                         }
                         style={
@@ -21,9 +27,9 @@ const StoryCard: React.FC<StoryCardProps> = ({ navigation, imageUrl, storyType, 
                             w-[70px] h-[70px]
                             `
                         }
-                        resizeMode='cover'
+                        resizeMode={FastImage.resizeMode.cover}
                     >
-                    </Image>
+                    </FastImage>
                 </TouchableOpacity>
                 {
                     storyType === 'user' &&
@@ -44,7 +50,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ navigation, imageUrl, storyType, 
                         }
                     </Text>
                 }
-            </View>
+            </Animated.View>
     )
 }
 

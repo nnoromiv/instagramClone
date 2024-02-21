@@ -8,10 +8,11 @@ import Button from './Button'
 import { getRandomPicture } from '../../api'
 import { AuthProps } from '../../types'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { auth, db } from '../../firebase'
 import Loading from '../Loading'
 import ModalNotification from '../ModalNotification'
+import Animated, { SlideInRight } from 'react-native-reanimated'
 
 const RegisterSchema = Yup.object().shape({
     userName: Yup.string().required('Required'),
@@ -24,7 +25,7 @@ const RegisterForm = ({ navigation }: any) => {
 
     const [load, setLoad] = useState(false)
 
-    const [ modal, setModal ] = useState({
+    const [modal, setModal] = useState({
         status: '',
         visible: false,
         message: ''
@@ -55,18 +56,18 @@ const RegisterForm = ({ navigation }: any) => {
             if (result.user.email !== null) {
                 await setDoc(
                     doc(db, 'users', result.user.email), {
-                        _uid: result.user.uid,
-                        username: i.userName,
-                        email: i.email,
-                        profilePicture: await getProfile(),
-                        joinedAt: serverTimestamp(),
+                    _uid: result.user.uid,
+                    username: i.userName,
+                    email: i.email,
+                    profilePicture: await getProfile(),
+                    joinedAt: new Date(),
 
-                    }
+                }
                 )
                 setModal({ status: "success", visible: true, message: 'Successful - Go Log In' })
             }
         } catch (error: any) {
-            if(error.message.includes('auth/email-already-in-use')){
+            if (error.message.includes('auth/email-already-in-use')) {
                 setModal({ status: "error", visible: true, message: 'Error: User already Exists' })
             } else {
                 console.log(error)
@@ -75,7 +76,7 @@ const RegisterForm = ({ navigation }: any) => {
         }
 
         const timeoutId = setTimeout(() => {
-            if(modal.status === 'success'){
+            if (modal.status === 'success') {
                 navigation.navigate('Login')
             }
             setModal({ status: '', visible: false, message: '' })
@@ -109,7 +110,7 @@ const RegisterForm = ({ navigation }: any) => {
                             </Text>
                         }
                     />
-                    
+
                     <FormInput
                         placeholder='User name'
                         onChangeText={handleChange('userName')}
@@ -149,7 +150,13 @@ const RegisterForm = ({ navigation }: any) => {
                         styles=''
                     />
                     <TouchableOpacity>
-                        <Text style={tw`ml-auto text-blue-900 underline font-bold`}>Terms & Conditions<Text style={tw`no-underline text-[#d3d3d3]`}> are accepted on account creation</Text></Text>
+                        <Animated.Text
+                            entering={SlideInRight.delay(400).duration(1000).springify().damping(30).mass(5)}
+
+                            style={tw`ml-auto text-blue-900 underline font-bold`}
+                        >
+                            Terms & Conditions
+                            <Text style={tw`no-underline text-[#d3d3d3]`}> are accepted on account creation</Text></Animated.Text>
                     </TouchableOpacity>
 
                     <Button
@@ -169,9 +176,11 @@ const RegisterForm = ({ navigation }: any) => {
                         onPress={() => handleSubmit(values)}
                     />
 
-                    <Text style={tw`mx-auto mt-3 text-base`}>Already have an account?
+                    <Animated.Text
+                        entering={SlideInRight.delay(400).duration(1000).springify().damping(30).mass(5)}
+                        style={tw`mx-auto mt-3 text-base`}>Already have an account?
                         <Text style={tw`text-blue-900 font-bold`} onPress={() => navigation.navigate('Login')}> Log In</Text>
-                    </Text>
+                    </Animated.Text>
                 </View>
             )}
         </Formik>

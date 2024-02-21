@@ -17,6 +17,7 @@
     "formik": "^2.4.5",
     "react": "18.2.0",
     "react-native": "0.73.4",
+    "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.15.0",
     "react-native-image-picker": "^7.1.0",
     "react-native-reanimated": "^3.7.1",

@@ -1,4 +1,4 @@
-import { updateDoc, doc, arrayUnion, query, collection, where, limit, getDocs, getDoc, serverTimestamp } from "firebase/firestore";
+import { updateDoc, doc, arrayUnion, query, collection, where, limit, getDocs, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 
 const handleComment = (comment: string, postOwner: string, postId: string) => {
@@ -8,7 +8,7 @@ const handleComment = (comment: string, postOwner: string, postId: string) => {
             comments: arrayUnion({
                 email: currentUser.email,
                 comment: comment,
-                commentedAt: serverTimestamp()
+                commentedAt: new Date()
             })
         });
     } else {

@@ -3,6 +3,7 @@ import { Image, TextInput, View } from 'react-native'
 import { FormInputProps } from '../types'
 import tw from '../tailwind'
 import Icon from 'react-native-vector-icons/FontAwesome6'
+import Animated, {  FadeInDown } from 'react-native-reanimated'
 
 /* The code is defining a functional component called `FormInput` using TypeScript and React. */
 const FormInput: React.FC<FormInputProps> = (
@@ -24,7 +25,10 @@ const FormInput: React.FC<FormInputProps> = (
     return (
         /* The code you provided is a React component called `FormInput`. It renders a `View` component
         that contains an `Image` component and a `TextInput` component. */
-        <View style={tw`flex justify-center mt-3`}>
+        <Animated.View
+            entering={FadeInDown.delay(200).duration(1000).springify().damping(30).mass(5)}
+            style={tw`flex justify-center mt-3`}
+        >
             {
                 source === undefined || sourceError === undefined
                     ? <></> :
@@ -47,7 +51,7 @@ const FormInput: React.FC<FormInputProps> = (
                 style={tw` ${styles === '' ? 'bg-[#d3d3d3] py-5' : styles} text-lg rounded-lg font-semibold pl-12 z-1 
                 ${logic === undefined ? 'pl-5' : logic ? 'pl-5' : 'pl-5 bg-[#ffd6d6]'} ` }
             />
-        </View>
+        </Animated.View>
     )
 }
 

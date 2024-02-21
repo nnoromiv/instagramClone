@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, View } from 'react-native'
+import { Dimensions, Text, View } from 'react-native'
 import tw from '../../tailwind'
 import Header from './Header'
 import { PostCardProps } from '../../types'
@@ -12,6 +12,9 @@ import { handleComment } from '../../api'
 import { useLoader } from '../../hooks'
 import Loading from '../Loading'
 import ModalNotification from '../ModalNotification'
+import FastImage from 'react-native-fast-image'
+
+const {width} = Dimensions.get('screen')
 
 const Card: React.FC<PostCardProps> = ({
   imageUrl,
@@ -29,8 +32,6 @@ const Card: React.FC<PostCardProps> = ({
   post
 }) => {
 
-  // console.log(likes)
-
   const { load, setLoad } = useLoader()
   const [ modal, setModal ] = useState({
     status: '',
@@ -41,9 +42,12 @@ const Card: React.FC<PostCardProps> = ({
   const handleSubmit = (i: any, { resetForm }: any) => {
     setLoad(true)
     try {
-      handleComment(i.comment, postOwner, postId)
+      if(i.comment !== ''){
+        handleComment(i.comment, postOwner, postId)
+      }
       resetForm()
     } catch (error) {
+      console.log(error)
       setModal({ status: "error", visible: true, message: 'Error: Comment not added - Try Again' })
     }
     setLoad(false)
@@ -69,12 +73,13 @@ const Card: React.FC<PostCardProps> = ({
       />
 
       <View style={tw`w-full h-[600px] relative mt-3`}>
-        <Image
+        <FastImage
           source={{
-            uri: postImage
+            uri: postImage,
+            priority: FastImage.priority.high
           }}
           style={tw`h-full w-full`}
-          resizeMode='stretch'
+          resizeMode={FastImage.resizeMode.cover}
         />
       </View>
 
@@ -115,22 +120,17 @@ const Card: React.FC<PostCardProps> = ({
       >
         {({ handleChange, values, resetForm }) => (
 
-          <View style={tw`gap-4 mb-3 px-3 ${values.comment === '' ? '' : 'flex-row items-center justify-between'}`}>
+          <View style={tw`gap-4 mb-3 px-3 flex-row items-center justify-between`}>
             <Loading load={load} />
             <FormInput
               onChangeText={handleChange('comment')}
               placeholder='What are your thoughts..'
-              styles={`bg-[#fff] border-b-[1] border-[#d3d3d3] text-black 
-                ${values.comment === "" ? 'w-full' : 'w-[70]'}`}
+              styles={`bg-[#fff] border-b-[1] border-[#d3d3d3] text-black w-[${width/5}]`}
               textContentType='name'
               value={values.comment}
             />
-            {
-              values.comment === '' ?
-                <></>
-                :
+
                 <Icon style='mt-6' navigation={navigation} onPress={() => handleSubmit(values, { resetForm })} urlSource={SEND} />
-            }
           </View>
         )}
       </Formik>

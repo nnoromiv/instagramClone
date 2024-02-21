@@ -1,8 +1,10 @@
 import React from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import tw from '../../tailwind'
 import { toSentenceCase } from '../../api'
 import { MessageCardProps } from '../../types'
+import Animated, { SlideInLeft } from 'react-native-reanimated'
+import FastImage from 'react-native-fast-image'
 
 const MessageCard: React.FC<MessageCardProps> = ({ navigation, onPress, messengerProfilePicture, messengerName }) => {
   return (
@@ -10,18 +12,21 @@ const MessageCard: React.FC<MessageCardProps> = ({ navigation, onPress, messenge
       style={tw`border-b-[1px] mb-3 border-[#d3d3d3]`}
       onPress={onPress}
     >
-      <View style={tw`flex-row gap-4 items-center mb-5`}>
-        <Image 
+      <Animated.View 
+        entering={SlideInLeft.delay(200).duration(1000).springify()}
+        style={tw`flex-row gap-4 items-center mb-5`}>
+        <FastImage 
           source={{
-            uri: messengerProfilePicture
+            uri: messengerProfilePicture,
+            priority: FastImage.priority.high
           }}        
 
-          resizeMode='cover'
+          resizeMode={FastImage.resizeMode.cover}
 
           style={tw`w-[70px] h-[70px] rounded-full`}
         />
         <Text style={tw`font-bold text-black text-lg`}>{toSentenceCase(messengerName)}</Text>
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   )
 }

@@ -6,6 +6,7 @@ import { PROFILE_PICTURE } from '../../constant'
 import { allPost, userDocInformation, allStory, mergeStoryByUid } from '../../api'
 import { DocumentData } from 'firebase/firestore'
 import { useCommentModal, useSinglePostInformation } from '../../hooks'
+import Animated, { FadeIn } from 'react-native-reanimated'
 
 const Home = ({ navigation }: any) => {
   const [userImage, setUserImage] = useState(PROFILE_PICTURE)
@@ -71,7 +72,8 @@ const Home = ({ navigation }: any) => {
   return (
     <SafeAreaView style={tw`bg-white w-full h-full`}>
       <StatusBar backgroundColor={'#f5f5f5'} barStyle={'dark-content'} />
-      <ScrollView 
+      <Animated.ScrollView
+        entering={FadeIn.delay(100).duration(1000).springify().damping(30)}
         stickyHeaderHiddenOnScroll 
         stickyHeaderIndices={[0]} 
         showsVerticalScrollIndicator={false}
@@ -83,7 +85,7 @@ const Home = ({ navigation }: any) => {
         <Story navigation={navigation} profilePicture={userImage} story={story} mergedStory={mergedStory} currentUser={currentUser} />
         <Post post={post} handleModal={() => handleModal()} setPostInfo={setPostInfo} setIsModal={setIsModal} />
         <Comments comment={postInfo} isModal={isModal} handleModal={Comment} />
-      </ScrollView>
+      </Animated.ScrollView>
       <BottomTab navigation={navigation} profilePicture={userImage} />
     </SafeAreaView>
   )

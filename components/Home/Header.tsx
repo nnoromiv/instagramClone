@@ -7,6 +7,7 @@ import Icon from './Icon'
 import { HeaderProps } from '../../types'
 import { logOut } from '../../api'
 import ModalNotification from '../ModalNotification'
+import Animated, { SlideInRight } from 'react-native-reanimated'
 
 
 const Header: React.FC<HeaderProps> = ({ navigation }) => {
@@ -41,11 +42,14 @@ const Header: React.FC<HeaderProps> = ({ navigation }) => {
                         {modal.message}
                     </Text>
                 } />
-            <View style={tw`flex flex-row gap-3`}>
+            <Animated.View
+             entering={SlideInRight.delay(2000).duration(2000).springify()}
+             style={tw`flex flex-row gap-3`}
+            >
                 <Icon urlSource={POST} navigation={navigation} onPress={() => openPost(navigation)} style='' />
                 <Icon urlSource={LIKE} navigation={navigation} style='' />
                 <Icon urlSource={MESSENGER} navigation={navigation} style=''onPress={() => navigation.navigate('Messenger')}/>
-            </View>
+            </Animated.View>
         </View>
     )
 }

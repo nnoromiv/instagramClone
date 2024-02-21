@@ -1,19 +1,21 @@
 import React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import tw from '../../tailwind'
 import { PostHeaderProps } from '../../types'
+import FastImage from 'react-native-fast-image'
 
 const Header: React.FC<PostHeaderProps> = ({ imageUrl, userName}) => {
   return (
     <View style={tw`w-[100%] mt-6 px-3 flex-row justify-between absolute z-1`}>
         <View style={tw`flex-row items-center gap-4`}>
-            <Image
+            <FastImage
                 source={{
-                  uri: imageUrl
+                  uri: imageUrl,
+                  priority: FastImage.priority.high
                 }}
                 style={tw`w-[50px]  h-[50px] rounded-full `}
-                resizeMode='cover'
-            ></Image>
+                resizeMode={FastImage.resizeMode.cover}
+            />
             <Text style={tw`font-bold text-[#d3d3d3]`}>{
                 userName === '' ?
                 'Unknown User' :

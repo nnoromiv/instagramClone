@@ -4,11 +4,15 @@ import tw from '../tailwind'
 import Icon from './Home/Icon'
 import { BOTTOM_TAB_ICONS } from '../constant'
 import { BottomTabProps } from '../types'
+import Animated, { SlideInDown } from 'react-native-reanimated'
 
 const BottomTab: React.FC<BottomTabProps> = ({ navigation, profilePicture }) => {
     const [active, setActive] = useState<string>('Home')
     return (
-        <View style={tw`flex bg-white flex-row justify-around items-center h-[50px]`}>
+        <Animated.View
+            entering={SlideInDown.duration(3000).delay(400).springify()}
+            style={tw`flex bg-white flex-row justify-around items-center h-[50px]`}
+        >
             {
                 BOTTOM_TAB_ICONS.map((item, index) => (
                     <Icon
@@ -28,7 +32,7 @@ const BottomTab: React.FC<BottomTabProps> = ({ navigation, profilePicture }) => 
                     />
                 ))
             }
-        </View>
+        </Animated.View>
     )
 }
 

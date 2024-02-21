@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import tw from '../../tailwind'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -10,11 +10,12 @@ import Button from '../Auth/Button'
 import { CameraDevice, useCameraDevice, useCameraPermission } from 'react-native-vision-camera'
 import Header from './Header'
 import { CreatePostUploaderProps, postSubmittedProps } from '../../types'
-import { DocumentData, addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { DocumentData, addDoc, collection } from 'firebase/firestore'
 import { db } from '../../firebase'
 import ModalNotification from '../ModalNotification'
 import Loading from '../Loading'
 import Icon from 'react-native-vector-icons/FontAwesome6'
+import FastImage from 'react-native-fast-image'
 
 const PostSchema = Yup.object().shape({
     caption: Yup.string().required("Write your caption").max(2200, 'Exceeded caption entries')
@@ -77,7 +78,7 @@ const Uploader: React.FC<CreatePostUploaderProps> = ({ navigation, paramPostType
                             username: user.data.username,
                             profilePicture: user.data.profilePicture,
                             _uid: user.data._uid,
-                            createdAt: serverTimestamp(),
+                            createdAt: new Date(),
                             likes: [],
                             comments: []
                         }).then(() => (
@@ -183,12 +184,13 @@ const Uploader: React.FC<CreatePostUploaderProps> = ({ navigation, paramPostType
                             })} />
 
                             <TouchableOpacity onPress={handleOpenCamera}>
-                                <Image
+                                <FastImage
                                     source={{
-                                        uri: image
+                                        uri: image,
+                                        priority: FastImage.priority.high
                                     }}
                                     style={tw`w-full h-[500px] bg-[#d3d3d3] rounded-b-lg`}
-                                    resizeMode='cover'
+                                    resizeMode={FastImage.resizeMode.cover}
                                 />
                             </TouchableOpacity>
 
