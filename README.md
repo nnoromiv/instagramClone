@@ -1,23 +1,68 @@
-# TypeScript React Native & Tailwind CSS
+# Instagram with TypeScript React Native & Tailwind CSS
 
-This is a new [**TypeScript React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli) integrated with Tailwind CSS functionalities from [**Tailwind React Native Classnames**](https://github.com/jaredh159/tailwind-react-native-classnames).
+This is a new [**TypeScript React Native**](https://reactnative.dev) project, bootstrapped using [`nnoromiv rnTailwind`](https://github.com/nnoromiv/rnTailwind).
+
+This is a instagram clone application that utilizes the [`Firebase`](https://www.firebase.google.com).
+
+## Preview
+
+### Welcome
+
+![Welcome](assets/preview/Welcome.png)
+
+### Sign Up
+
+![Sign Up](assets/preview/SignUp.png)
+
+### LogIn
+
+![LogIn](assets/preview/LogIn.png)
+
+### LogIn Working
+
+![LogIn Working](assets/preview/LogInWorking.png)
+
+### Error Display
+
+![Error Display](assets/preview/ErrorDisplay.png)
+
+### Home
+
+![Home](assets/preview/Home.png)
+
+### Post
+
+![Post](assets/preview/Post.png)
+
+### Select Image
+
+![Select Image](assets/preview/SelectImage.png)
+
+### Story
+
+![Story](assets/preview/Story.png)
+
+### Upload Post
+
+![Upload Post](assets/preview/UploadPost.png)
+
+### Messenger
+
+![Messenger](assets/preview/Messenger.png)
 
 ## Getting Started
 
 ## Step 1: Clone Repository
 
 ```bash
-   git clone https://github.com/nnoromiv/Instagram.git
+   git clone https://github.com/nnoromiv/instagramClone.git
 ```
 
-## Step 2: Delete existing `.git` file
-
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
->**Dependencies**: To install all dependencies run
+>**Dependencies** Install all dependencies
 
 ```bash
-   cd Instagram
+   cd instagramClone
 ```
 
 ```bash
@@ -28,7 +73,59 @@ This is a new [**TypeScript React Native**](https://reactnative.dev) project, bo
    yarn add 
 ```
 
-## Step 3: Start the Metro Server
+## Step 0: Create your `gradle.properties` file
+
+Naturally auto generated react native structure contain this file but I `.gitignore` mine cause it hold Uploading Secrets.
+
+- Navigate to the `android` folder.
+- Create new file called `gradle.properties`
+- Populate with the code below.
+
+```gradle.properties
+   # Project-wide Gradle settings.
+
+   # IDE (e.g. Android Studio) users:
+   # Gradle settings configured through the IDE *will override*
+   # any settings specified in this file.
+
+   # For more details on how to configure your build environment visit
+   # http://www.gradle.org/docs/current/userguide/build_environment.html
+
+   # Specifies the JVM arguments used for the daemon process.
+   # The setting is particularly useful for tweaking memory settings.
+   # Default value: -Xmx512m -XX:MaxMetaspaceSize=256m
+   org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m
+
+   # When configured, Gradle will run in incubating parallel mode.
+   # This option should only be used with decoupled projects. More details, visit
+   # http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
+   # org.gradle.parallel=true
+
+   # AndroidX package structure to make it clearer which packages are bundled with the
+   # Android operating system, and which are packaged with your app's APK
+   # https://developer.android.com/topic/libraries/support-library/androidx-rn
+   android.useAndroidX=true
+   # Automatically convert third-party libraries to use AndroidX
+   android.enableJetifier=true
+
+   # Use this property to specify which architecture you want to build.
+   # You can also override it from the CLI using
+   # ./gradlew <task> -PreactNativeArchitectures=x86_64
+   reactNativeArchitectures=armeabi-v7a,arm64-v8a,x86,x86_64
+
+   # Use this property to enable support to the new architecture.
+   # This will allow you to use TurboModules and the Fabric render in
+   # your application. You should enable this flag either if you want
+   # to write custom TurboModules/Fabric components OR use libraries that
+   # are providing them.
+   newArchEnabled=false
+
+   # Use this property to enable or disable the Hermes JS engine.
+   # If set to false, you will be using JSC instead.
+   hermesEnabled=true
+```
+
+## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
@@ -42,7 +139,7 @@ To start Metro, run the following command from the _root_ of your React Native p
    yarn start
 ```
 
-## Step 4: Start your Application
+## Step 2: Start your Application
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
@@ -66,20 +163,53 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 5: Modifying your App
+## Step 3: Set Up your API & `.env`
 
 Now that you have successfully run the app, let's modify it.
 
-1. Open `Home.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+1. Navigate to [`Firebase`](https://www.firebase.google.com/).
+2. Create an Account.
+3. Create an application and follow each step.
+4. Create a firebase.js file in your root directory
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+   ```js
+      import { initializeApp } from "firebase/app";
+      import { initializeFirestore } from "firebase/firestore";
+      import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+      import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
-## Step 6: Using the Tailwind
+      const firebaseConfig = {
+         apiKey: FIREBASE_API_KEY,
+         authDomain: FIREBASE_AUTH_DOMAIN,
+         projectId: FIREBASE_PROJECT_ID,
+         storageBucket: FIREBASE_STORAGE_BUCKET,
+         messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+         appId: FIREBASE_APP_ID,
+         measurementId: FIREBASE_MEASUREMENT_ID
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      export const auth = initializeAuth(app, {
+         persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+      })
+      export const db = initializeFirestore(app, {
+         experimentalForceLongPolling: true,
+         useFetchStreams: false
+      })
+   ```
+
+5. Go to [`ImgBB`](https://www.imgbb.com) - This Api is consumed to upload users images online.
+6. Create a `.env` file in the folder directory
+7. Populate your `.env` as follows.
+
+```env
+   BASE_URL='https://api.imgbb.com/1/upload'
+   API_KEY=YOUR_IMGBB_API_KEY
+   RANDOM_PHOTO='https://randomuser.me/api'
+```
+
+## Step 4: Using the Tailwind
 
 ```ts
 
@@ -93,18 +223,9 @@ Now that you have successfully run the app, let's modify it.
 
 ```
 
-## Features
-
-- Stack Navigation library.
-- Tailwind by TWRNC see more detail from the links provided below
-
-[**Jared Henderson Profile**](https://github.com/jaredh159)
-
-[**Visit the Official Tailwind React Native Classname by Jared Henderson**](https://github.com/jaredh159/tailwind-react-native-classnames)
-
 ## Congratulations! :tada:
 
-You've successfully run and modified your React Native App. :partying_face:
+You've successfully run and modified your Instagram Clone. :partying_face:
 
 ### Now what?
 

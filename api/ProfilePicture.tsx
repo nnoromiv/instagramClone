@@ -1,7 +1,7 @@
-import { PROFILE_PICTURE } from "@env"
+import { RANDOM_PHOTO } from "@env"
 
 const getRandomPicture = async () => {
-    const result = await fetch(PROFILE_PICTURE)
+    const result = await fetch(RANDOM_PHOTO)
     return result.json()
 }
 

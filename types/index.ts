@@ -3,7 +3,6 @@ import { ChangeEvent , ReactNode } from "react";
 import { ImageSourcePropType, KeyboardTypeOptions } from "react-native";
 import { Source } from "react-native-fast-image";
 
-// Example Type Style
 type textContentType =
     'none' | 'URL'
     | 'addressCity'

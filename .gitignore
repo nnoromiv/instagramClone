@@ -68,3 +68,7 @@ yarn-error.log
 firebase.ts
 firebase.js
 .env
+
+instagram.keystore
+android/gradle.properties
+android/app/instagram.keystore

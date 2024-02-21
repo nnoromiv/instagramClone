@@ -84,6 +84,15 @@ android {
         versionName "1.0"
     }
     signingConfigs {
+        release {
+            if (project.hasProperty('UPLOAD_STORE_FILE')) {
+                storeFile file(UPLOAD_STORE_FILE)
+                storePassword UPLOAD_STORE_PASSWORD
+                keyAlias UPLOAD_KEY_ALIAS
+                keyPassword UPLOAD_KEY_PASSWORD
+            }
+        }
+
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
